@@ -1,17 +1,27 @@
 'use strict'
 
-// const canvas = document.getElementById('tutorial')
+// const canvas = document.getElementById('myCanvas')
 // const ctx = canvas.getContext('2d')
 
 const draw = function () {
-  const ctx = document.getElementById('canvas').getContext('2d')
-  for (let i = 0; i < 6; i++) {
-    for (let j = 0; j < 6; j++) {
-      ctx.fillStyle = 'rgb(' + Math.floor(255 - 42.5 * i) + ', ' +
-                       Math.floor(255 - 42.5 * j) + ', 0)'
-      ctx.fillRect(j * 25, i * 25, 25, 25)
-    }
-  }
+  const ctx = document.getElementById('myCanvas').getContext('2d')
+  ctx.beginPath()
+  ctx.rect(20, 40, 50, 50)
+  ctx.fillStyle = '#FF0000'
+  ctx.fill()
+  ctx.closePath()
+
+  ctx.beginPath()
+  ctx.arc(240, 160, 20, 0, Math.PI * 2, false)
+  ctx.fillStyle = 'green'
+  ctx.fill()
+  ctx.closePath()
+
+  ctx.beginPath()
+  ctx.rect(160, 10, 100, 40)
+  ctx.strokeStyle = 'rgba(0, 0, 255, 0.5)'
+  ctx.stroke()
+  ctx.closePath()
 }
 
 module.exports = {

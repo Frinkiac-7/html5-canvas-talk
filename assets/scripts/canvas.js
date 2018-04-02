@@ -36,7 +36,7 @@ const bricks = []
 for (let column = 0; column < brickColumnCount; column++) {
   bricks[column] = []
   for (let row = 0; row < brickRowCount; row++) {
-    bricks[column][row] = { x: 0, y: 0 }
+    bricks[column][row] = { x: 0, y: 0, status: 1 }
   }
 }
 
@@ -62,15 +62,17 @@ const drawPaddle = function () {
 const drawBricks = function () {
   for (let column = 0; column < brickColumnCount; column++) {
     for (let row = 0; row < brickRowCount; row++) {
-      const brickX = (column * (brickWidth + brickPadding)) + brickOffsetLeft
-      const brickY = (row * (brickHeight + brickPadding)) + brickOffsetTop
-      bricks[column][row].x = brickX
-      bricks[column][row].y = brickY
-      ctx.beginPath()
-      ctx.rect(brickX, brickY, brickWidth, brickHeight)
-      ctx.fillStyle = '#0095DD'
-      ctx.fill()
-      ctx.closePath()
+      if (bricks[column][row].status === 1) {
+        const brickX = (column * (brickWidth + brickPadding)) + brickOffsetLeft
+        const brickY = (row * (brickHeight + brickPadding)) + brickOffsetTop
+        bricks[column][row].x = brickX
+        bricks[column][row].y = brickY
+        ctx.beginPath()
+        ctx.rect(brickX, brickY, brickWidth, brickHeight)
+        ctx.fillStyle = '#0095DD'
+        ctx.fill()
+        ctx.closePath()
+      }
     }
   }
 }
@@ -82,6 +84,7 @@ const draw = function () {
   drawBricks()
   drawBall()
   drawPaddle()
+  collisionDetection()
   // set the new ball position
   x += dx
   y += dy
@@ -90,14 +93,14 @@ const draw = function () {
   // also randomizes ball color
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx
-    ballColor = getRandomColor()
+    // ballColor = getRandomColor()
   }
 
   // check for ball collision on top wall, reverse direction and randomize ball
   // color if true. If ball collides with bottom wall, game over
   if (y + dy < ballRadius) {
     dy = -dy
-    ballColor = getRandomColor()
+    // ballColor = getRandomColor()
   } else if (y + dy > canvas.height - ballRadius) {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy
@@ -139,6 +142,21 @@ const keyUpHandler = function (event) {
     rightPressed = false
   } else if (event.keyCode === 37) {
     leftPressed = false
+  }
+}
+
+// check all bricks to see if any collide with ball center
+const collisionDetection = function () {
+  for (let column = 0; column < brickColumnCount; column++) {
+    for (let row = 0; row < brickRowCount; row++) {
+      const brick = bricks[column][row]
+      if (brick.status === 1) {
+        if (x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight) {
+          dy = -dy
+          brick.status = 0
+        }
+      }
+    }
   }
 }
 

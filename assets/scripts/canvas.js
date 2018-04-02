@@ -3,8 +3,9 @@
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
 
-// Initialize Score
+// Initialize Score and Lives
 let score = 0
+let lives = 3
 
 // ball position
 let x = canvas.width / 2
@@ -88,6 +89,7 @@ const draw = function () {
   drawBall()
   drawPaddle()
   drawScore()
+  drawLives()
   collisionDetection()
   // set the new ball position
   x += dx
@@ -109,9 +111,18 @@ const draw = function () {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy
     } else {
-      alert('GAME OVER')
-      clearInterval(renderGame)
-      document.location.reload(true)
+      lives--
+      if (!lives) {
+        alert('GAME OVER')
+        clearInterval(renderGame)
+        document.location.reload(true)
+      } else {
+        x = canvas.width / 2
+        y = canvas.height - 30
+        dx = 2
+        dy = -2
+        paddleX = (canvas.width - paddleWidth) / 2
+      }
     }
   }
 
@@ -181,6 +192,12 @@ const drawScore = function () {
   ctx.font = '16px Arial'
   ctx.fillStyle = '#0095DD'
   ctx.fillText('Score: ' + score, 8, 20)
+}
+
+const drawLives = function () {
+  ctx.font = '16px Arial'
+  ctx.fillStyle = '#0095DD'
+  ctx.fillText('Lives: ' + lives, canvas.width - 65, 20)
 }
 
 const renderGame = setInterval(draw, 10)

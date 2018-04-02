@@ -51,17 +51,26 @@ const draw = function () {
   x += dx
   y += dy
 
-  // check for ball collision on top and bottom wall, reverse direction if true
-  // also randomizes ball color
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-    dy = -dy
-    ballColor = getRandomColor()
-  }
   // check for ball collision on left and right wall, reverse direction if true
   // also randomizes ball color
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx
     ballColor = getRandomColor()
+  }
+
+  // check for ball collision on top wall, reverse direction and randomize ball
+  // color if true. If ball collides with bottom wall, game over
+  if (y + dy < ballRadius) {
+    dy = -dy
+    ballColor = getRandomColor()
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy
+    } else {
+      alert('GAME OVER')
+      clearInterval(renderGame)
+      document.location.reload(true)
+    }
   }
 
   // move paddle on player input, within bounds of game
@@ -98,7 +107,7 @@ const keyUpHandler = function (event) {
   }
 }
 
-setInterval(draw, 10)
+const renderGame = setInterval(draw, 10)
 
 module.exports = {
   draw,

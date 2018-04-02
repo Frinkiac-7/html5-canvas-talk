@@ -123,15 +123,15 @@ const draw = function () {
   }
 }
 
-// generate a random color
-const getRandomColor = function () {
-  const letters = '0123456789ABCDEF'
-  let color = '#'
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)]
-  }
-  return color
-}
+// // generate a random color
+// const getRandomColor = function () {
+//   const letters = '0123456789ABCDEF'
+//   let color = '#'
+//   for (let i = 0; i < 6; i++) {
+//     color += letters[Math.floor(Math.random() * 16)]
+//   }
+//   return color
+// }
 
 const keyDownHandler = function (event) {
   if (event.keyCode === 39) {
@@ -146,6 +146,13 @@ const keyUpHandler = function (event) {
     rightPressed = false
   } else if (event.keyCode === 37) {
     leftPressed = false
+  }
+}
+
+const mouseMoveHandler = function (event) {
+  const relativeX = event.clientX - canvas.offsetLeft
+  if (relativeX > 0 + (paddleWidth / 2) && relativeX < canvas.width - (paddleWidth / 2)) {
+    paddleX = relativeX - paddleWidth / 2
   }
 }
 
@@ -181,5 +188,6 @@ const renderGame = setInterval(draw, 10)
 module.exports = {
   draw,
   keyDownHandler,
-  keyUpHandler
+  keyUpHandler,
+  mouseMoveHandler
 }

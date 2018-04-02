@@ -6,6 +6,7 @@ const canvas = require('./canvas')
 
 document.addEventListener('keydown', canvas.keyDownHandler, false)
 document.addEventListener('keyup', canvas.keyUpHandler, false)
+document.addEventListener('mousemove', canvas.mouseMoveHandler, false)
 
 $(() => {
   setAPIOrigin(location, config)

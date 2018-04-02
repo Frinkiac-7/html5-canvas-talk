@@ -3,7 +3,8 @@
 const setAPIOrigin = require('../../lib/set-api-origin')
 const config = require('./config')
 // const canvas = require('./canvas')
-const solarSystem = require('./solar-system')
+// const solarSystem = require('./solar-system')
+const panorama = require('./panorama')
 
 // document.addEventListener('keydown', canvas.keyDownHandler, false)
 // document.addEventListener('keyup', canvas.keyUpHandler, false)
@@ -12,7 +13,7 @@ const solarSystem = require('./solar-system')
 $(() => {
   setAPIOrigin(location, config)
   // canvas.draw()
-  solarSystem.init()
+  // solarSystem.init()
 })
 
 // use require with a reference to bundle the file and use it in this file

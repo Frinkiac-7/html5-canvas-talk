@@ -3,6 +3,9 @@
 const canvas = document.getElementById('myCanvas')
 const ctx = canvas.getContext('2d')
 
+// Initialize Score
+let score = 0
+
 // ball position
 let x = canvas.width / 2
 let y = canvas.height - 30
@@ -84,6 +87,7 @@ const draw = function () {
   drawBricks()
   drawBall()
   drawPaddle()
+  drawScore()
   collisionDetection()
   // set the new ball position
   x += dx
@@ -154,10 +158,22 @@ const collisionDetection = function () {
         if (x > brick.x && x < brick.x + brickWidth && y > brick.y && y < brick.y + brickHeight) {
           dy = -dy
           brick.status = 0
+          score++
+          if (score === brickRowCount * brickColumnCount) {
+            alert(`YOU WIN, CONGRATULATIONS! FINAL SCORE: ${score}`)
+            document.location.reload()
+          }
         }
       }
     }
   }
+}
+
+// Render the score
+const drawScore = function () {
+  ctx.font = '16px Arial'
+  ctx.fillStyle = '#0095DD'
+  ctx.fillText('Score: ' + score, 8, 20)
 }
 
 const renderGame = setInterval(draw, 10)

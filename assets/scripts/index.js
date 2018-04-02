@@ -4,6 +4,9 @@ const setAPIOrigin = require('../../lib/set-api-origin')
 const config = require('./config')
 const canvas = require('./canvas')
 
+document.addEventListener('keydown', canvas.keyDownHandler, false)
+document.addEventListener('keyup', canvas.keyUpHandler, false)
+
 $(() => {
   setAPIOrigin(location, config)
   canvas.draw()

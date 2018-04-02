@@ -81,6 +81,7 @@ const drawBricks = function () {
   }
 }
 
+// central hub of the game logic
 const draw = function () {
   // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -144,6 +145,7 @@ const draw = function () {
 //   return color
 // }
 
+// Next 2 methods handle user input via keyboard
 const keyDownHandler = function (event) {
   if (event.keyCode === 39) {
     rightPressed = true
@@ -160,6 +162,7 @@ const keyUpHandler = function (event) {
   }
 }
 
+// handles user input via mouse
 const mouseMoveHandler = function (event) {
   const relativeX = event.clientX - canvas.offsetLeft
   if (relativeX > 0 + (paddleWidth / 2) && relativeX < canvas.width - (paddleWidth / 2)) {
@@ -194,6 +197,7 @@ const drawScore = function () {
   ctx.fillText('Score: ' + score, 8, 20)
 }
 
+// Render player's life counter
 const drawLives = function () {
   ctx.font = '16px Arial'
   ctx.fillStyle = '#0095DD'

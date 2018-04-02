@@ -8,25 +8,16 @@ const draw = function () {
   if (canvas.getContext) {
     const ctx = canvas.getContext('2d')
 
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 3; j++) {
-        ctx.beginPath()
-        const x = 25 + j * 50 // x coordinate
-        const y = 25 + i * 50 // y coordinate
-        const radius = 20 // Arc radius
-        const startAngle = 0 // Starting point on circle
-        const endAngle = Math.PI + (Math.PI * j) / 2 // End point on circle
-        const anticlockwise = i % 2 !== 0 // clockwise or anticlockwise
-
-        ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise)
-
-        if (i > 1) {
-          ctx.fill()
-        } else {
-          ctx.stroke()
-        }
-      }
-    }
+    // Quadratric curves example
+    ctx.beginPath()
+    ctx.moveTo(75, 25)
+    ctx.quadraticCurveTo(25, 25, 25, 62.5)
+    ctx.quadraticCurveTo(25, 100, 50, 100)
+    ctx.quadraticCurveTo(50, 120, 30, 125)
+    ctx.quadraticCurveTo(60, 120, 65, 100)
+    ctx.quadraticCurveTo(125, 100, 125, 62.5)
+    ctx.quadraticCurveTo(125, 25, 75, 25)
+    ctx.stroke()
   }
 }
 

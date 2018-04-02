@@ -23,6 +23,23 @@ const paddleSpeed = 7
 let rightPressed = false
 let leftPressed = false
 
+// initialize brick variables
+const brickRowCount = 3
+const brickColumnCount = 5
+const brickWidth = 75
+const brickHeight = 20
+const brickPadding = 10
+const brickOffsetTop = 30
+const brickOffsetLeft = 30
+// create 2D array of bricks
+const bricks = []
+for (let column = 0; column < brickColumnCount; column++) {
+  bricks[column] = []
+  for (let row = 0; row < brickRowCount; row++) {
+    bricks[column][row] = { x: 0, y: 0 }
+  }
+}
+
 // renders the ball
 const drawBall = function () {
   ctx.beginPath()
@@ -41,10 +58,28 @@ const drawPaddle = function () {
   ctx.closePath()
 }
 
+// set brick x/y values and render them
+const drawBricks = function () {
+  for (let column = 0; column < brickColumnCount; column++) {
+    for (let row = 0; row < brickRowCount; row++) {
+      const brickX = (column * (brickWidth + brickPadding)) + brickOffsetLeft
+      const brickY = (row * (brickHeight + brickPadding)) + brickOffsetTop
+      bricks[column][row].x = brickX
+      bricks[column][row].y = brickY
+      ctx.beginPath()
+      ctx.rect(brickX, brickY, brickWidth, brickHeight)
+      ctx.fillStyle = '#0095DD'
+      ctx.fill()
+      ctx.closePath()
+    }
+  }
+}
+
 const draw = function () {
   // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height)
-  // render the ball and paddle
+  // render the ball, paddle, and bricks
+  drawBricks()
   drawBall()
   drawPaddle()
   // set the new ball position
